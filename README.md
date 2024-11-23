@@ -111,3 +111,7 @@ const getJSON = async function (url, errorMsg = "Something went wrong..") {
 | jh-fa      | Fetch Add    | Adds data to an API endpoint.            |
 | jh-fu      | Fetch Update | Updates data in an API endpoint.         |
 | jh-fd      | Fetch Delete | Deletes data from an API endpoint.       |
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
