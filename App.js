@@ -1,12 +1,32 @@
+// jh-rnan to spawn the boilerplate
+
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+// DON'T FORGET TO IMPORT DefaultTheme FROM react-native-paper!!!!!!!! -->|| PK v1
 import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
-import * as Font from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import RootNavigator from "./navigation/RootNavigator";
+/*
+// Originally my attempt to import the "custom" TrebuchetMS.ttc font
+// Alas... it did not work lol... but i'll leave it here so I can remember my first time learning how to use useEffect and useState
+// You never forget your first time..
+
+// import * as Font from "expo-font";
+// import * as SplashScreen from "expo-splash-screen";
+
+// -->|| PK v2
+*/
+
+// Generated from:
+// https://callstack.github.io/react-native-paper/docs/guides/theming/#creating-dynamic-theme-colors
+// Primary: #941A1D
+// Secondary (custom): #C64C38
+// Tertiary (custom): #CB6D4F
+// Copy the light-theme and PASTE IT IN THE THEME OBJECT
+// REST operator to declare the default theme and copy it into the custom ROI theme
+// Then explcitily define the dcustom ROI theme's colours as the default theme's colours
 
 // Define your custom theme
 const theme = {
@@ -54,7 +74,8 @@ const theme = {
     onSurfaceDisabled: "rgba(32, 26, 25, 0.38)",
     backdrop: "rgba(59, 45, 44, 0.4)",
   },
-  // Global font settings so I DON"T have to use the "fontFamily" prop on every single text component..
+  // Global font settings so I DON"T have to use the "fontFamily" prop on every single text component.. -->|| PK v1
+  // I just changed font to text and it magically works so i'm not touching it again lol -->|| PK v2
   text: {
     regular: {
       fontFamily: "TrebuchetMS-Regular",

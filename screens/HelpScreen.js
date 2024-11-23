@@ -28,6 +28,16 @@ import { useIsFocused } from "@react-navigation/native";
 import { Dropdown } from "react-native-paper-dropdown";
 
 export default function HelpScreen(props) {
+  function goBack() {
+    props.navigation.goBack();
+  }
+
+  function goHome() {
+    props.navigation.navigate("Home");
+  }
+
+  // mode="contained" is a prop that sets my button style to 'contained'
+  // meaning it has a background color and elevation!! | Radical
   return (
     <Surface style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -42,6 +52,12 @@ export default function HelpScreen(props) {
           culpa qui officia deserunt mollit anim id est laborum.
         </Text>
       </ScrollView>
+      <Button mode="contained" onPress={goBack} style={styles.button}>
+        Go Back
+      </Button>
+      <Button mode="contained" onPress={goHome} style={styles.button}>
+        Go Home
+      </Button>
     </Surface>
   );
 }
@@ -58,5 +74,8 @@ const styles = StyleSheet.create({
   loremText: {
     marginTop: 16,
     textAlign: "center",
+  },
+  button: {
+    marginTop: 9,
   },
 });
