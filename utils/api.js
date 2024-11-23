@@ -1,4 +1,6 @@
-const API_BASE_URL = "Http://localhost:3000/api"; // Helper function to fetch JSON data
+const API_BASE_URL = "Http://localhost:3000/api";
+
+// Helper function to fetch JSON data
 /**
  * My helper function that fetches JSON data from the specified URL.
  * Only works with JSON data, and only works for GET requests.

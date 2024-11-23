@@ -28,24 +28,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import { Dropdown } from "react-native-paper-dropdown";
 
 export default function PersonViewScreen(props) {
-  const [state, setState] = useState({
-    showAddButton: true,
-    showEditButton: true,
-    showViewButton: true,
-  });
-
-  useFocusEffect(
-    React.useCallback(
-      () => {
-        setState({
-          showAddButton: true,
-          showEditButton: true,
-          showViewButton: true,
-        });
-      },
-      [] // Empty dependency array means this effect will only run once
-    )
-  );
 
   function showPeopleView() {
     props.navigation.navigate("PeopleView");

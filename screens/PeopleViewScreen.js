@@ -26,53 +26,38 @@ import {
 } from "react-native";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 // For resetting the menu state when the screen is focused
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import { fetchPeople, deletePerson } from "../utils/api";
 import { Dropdown } from "react-native-paper-dropdown";
 
 export default function PeopleViewScreen(props) {
+  // jh-us
   // useState() returns an array with two elements:
   // 1. the current state
   // 2. a function to update it
-  const [state, setState] = useState({
-    // Start my state with the 3 buttons enabled
-    showAddButton: true,
-    showEditButton: true,
-    showViewButton: true,
-  });
+  const [people, setPeople] = useState([]);
+  const [offline, setOffline] = useState(false);
+  const [error, setError] = useState(null);
+  const [visible, setVisible] = useState(false);
+  const [selectedPersonId, setSelectedPersonId] = useState(null);
+  const [selectedPersonName, setSelectedPersonName] = useState("");
+  const isFocused = useIsFocused();
 
-  /*
-  //
-  // useFocusEffect runs the provided function whenever the screen is focused
-  // Infinite loop of updates & errors, man, but i'll leave it here..
-  // —> PKv1
+  // jh-uef
 
-  useFocusEffect(() => {
-    
-    setState({
-      showAddButton: true,
-      showEditButton: true,
-      showViewButton: true,
-    });
-  });
-
-  // Infinite loop wasa because I didn't supply an empty dependency array..
-  // —> PKv2
- */
-
-  useFocusEffect(
-    // Memoizes the function so it only runs once
-    React.useCallback(
-      () => {
-        setState({
-          showAddButton: true,
-          showEditButton: true,
-          showViewButton: true,
-        });
-      },
-      [] // Empty dependency array means this effect will only run once
-    )
-  );
-
+  const fetchData = async () => {
+    try {
+      const data = await fetchPeople();
+      setPeople(data);
+    } catch (err) {
+      console.error(err);
+      setOffline(true);
+      setError("Unable to fetch data, offline mode");
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   function showAddPerson() {
     props.navigation.navigate("PersonEdit", { id: -1 });
   }
