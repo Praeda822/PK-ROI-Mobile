@@ -4,6 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
+import * as Font from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 import RootNavigator from "./navigation/RootNavigator";
 
 // Define your custom theme
@@ -52,9 +54,38 @@ const theme = {
     onSurfaceDisabled: "rgba(32, 26, 25, 0.38)",
     backdrop: "rgba(59, 45, 44, 0.4)",
   },
+  // Global font settings so I DON"T have to use the "fontFamily" prop on every single text component..
+  fonts: {
+    regular: {
+      fontFamily: "TrebuchetMS-Regular",
+      fontWeight: "normal",
+    },
+    medium: {
+      fontFamily: "TrebuchetMS-Bold",
+      fontWeight: "bold",
+    },
+    light: {
+      fontFamily: "TrebuchetMS-Regular",
+      fontWeight: "300",
+    },
+    thin: {
+      fontFamily: "TrebuchetMS-Regular",
+      fontWeight: "100",
+    },
+  },
 };
 
 export default function App() {
+  // Ensures that the "custom" font is loaded before rendering the app
+  // Ripped straight from C:\Windows\Fonts\
+  // All of this just to globally load a font????
+  const [fontsLoaded] = Font.useFonts({
+    "TrebuchetMS-Regular": require("./assets/fonts/trebuc.ttf"),
+    "TrebuchetMS-Bold": require("./assets/fonts/trebucbd.ttf"),
+    "TrebuchetMS-Italic": require("./assets/fonts/trebucit.ttf"),
+    "TrebuchetMS-BoldItalic": require("./assets/fonts/trebucbi.ttf"),
+  });
+
   return (
     <SafeAreaProvider>
       <PaperProvider theme={theme}>

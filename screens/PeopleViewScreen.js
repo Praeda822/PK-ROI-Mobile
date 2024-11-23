@@ -30,26 +30,32 @@ import { Dropdown } from "react-native-paper-dropdown";
 
 export default function PeopleViewScreen(props) {
   function showAddPerson() {
-    props.navigation.navigate("EditPerson", { id: -1 });
+    props.navigation.navigate("PersonEdit", { id: -1 });
   }
 
   function showEditPerson(id) {
-    props.navigation.navigate("EditPerson", { id: id });
+    props.navigation.navigate("PersonEdit", { id: id });
   }
 
   function showViewPerson(id) {
-    props.navigation.navigate("ViewPerson", { id: id });
+    props.navigation.navigate("PersonView", { id: id });
   }
 
   function showPeopleView() {
     props.navigation.navigate("PeopleView");
   }
   return (
+    // "Title" is a custom component that formats text as a title, comes from React
+    // "Mode" is a custom component that formats text as a button, comes from React Native Paper
+    // I want to be using mode="" for my buttons
     <Surface style={styles.container}>
       <Text variant="displaySmall">PeopleViewScreen</Text>
-      <Button title="Add Person" onPress={showAddPerson} />
+      <Button mode="Contained" title="Add Person" onPress={showAddPerson} />
+      Add Person
       <Button title="Edit Person" onPress={() => showEditPerson(1)} />
+      Edit Person
       <Button title="View Person" onPress={() => showViewPerson(1)} />
+      View Person
     </Surface>
   );
 }
