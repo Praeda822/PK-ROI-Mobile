@@ -56,6 +56,7 @@ export default function PeopleViewScreen(props) {
   });
 
   // Infinite loop wasa because I didn't supply an empty dependency array..
+  // —> PKv2
  */
 
   useFocusEffect(
