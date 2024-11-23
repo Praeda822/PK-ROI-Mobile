@@ -157,6 +157,12 @@ const styles = StyleSheet.create({
 // Which is just a fancy way of saying, "_If I've already run this function with these arguments, I don't need to run it again._"
 // This is important because React re-renders components whenever their state changes, and if I have a function that's being called every time a component re-renders, I can use memoization to prevent that function from being called multiple times and needlessly chewing up CPU resources.
 // The React.useCallback() hook fits into this — which I've also mentioned below —  because it is responsible _for_ memoizing the funtions (_caching them_) **so that they only run once**.
+// Imagine you’re teaching a mate to make a perfect cuppa:
+
+    // **Memoization Off**: Every time you ask, they say, "Wait, let me relearn how to boil water, brew tea, and pour it."
+    // **Memoization On**: They say, "Nah mate, I already know this. Just pour the tea straight away."
+
+// It says: "If none of the ingredients (dependencies) change, I’ll skip relearning how to make tea." | _THAT'S_ memoization.
 //
 //
 // =======================
