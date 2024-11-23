@@ -109,34 +109,31 @@ export default function PeopleViewScreen(props) {
     props.navigation.navigate("PeopleView");
   }
   return (
-    // "Title" is a custom component that formats text as a title, comes from React
-    // "Mode" is a custom component that formats text as a button, comes from React Native Paper
-    // I want to be using mode="" for my buttons
+    // the map function is to iterate over the people array and for every person, it will render a Text component with the person's name
+    // the key prop is used to uniquely identify each item in the list so that React can efficiently update the list when it changes.
     <Surface style={styles.container}>
       <Text variant="displaySmall">PeopleViewScreen</Text>
-      {state.showAddButton && (
-        <Button mode="contained" onPress={showAddPerson} style={styles.button}>
-          Add Person
-        </Button>
-      )}
-      {state.showEditButton && (
-        <Button
-          mode="contained"
-          onPress={() => showEditPerson(1)}
-          style={styles.button}
-        >
-          Edit Person
-        </Button>
-      )}
-      {state.showViewButton && (
-        <Button
-          mode="contained"
-          onPress={() => showViewPerson(1)}
-          style={styles.button}
-        >
-          View Person
-        </Button>
-      )}
+      // Iterate over
+      {people.map((person) => (
+        <Text key={person.id}>{person.name}</Text>
+      ))}
+      <Button mode="contained" onPress={showAddPerson} style={styles.button}>
+        Add Person
+      </Button>
+      <Button
+        mode="contained"
+        onPress={() => showEditPerson(1)}
+        style={styles.button}
+      >
+        Edit Person
+      </Button>
+      <Button
+        mode="contained"
+        onPress={() => showViewPerson(1)}
+        style={styles.button}
+      >
+        View Person
+      </Button>
     </Surface>
   );
 }
