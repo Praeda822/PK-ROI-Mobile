@@ -148,10 +148,14 @@ const styles = StyleSheet.create({
 // The useIsFocused hook is a hook that returns a **boolean value** that tells me if the screen (_PeopleViewScreen) is currently focused or not.
 //
 //
-// =======================
-// = React.useCallback() =
-// =======================
+// ===================== 
+// =    MEMOIZATION    =
+// =====================
 //
+// Memoization is a technique used to optimize the performance of a function by caching its output based on its input.
+// Which is just a fancy way of saying, "_If I've already run this function with these arguments, I don't need to run it again._"
+// This is important because React re-renders components whenever their state changes, and if I have a function that's being called every time a component re-renders, I can use memoization to prevent that function from being called multiple times and needlessly chewing up CPU resources.
+// The React.useCallback() hook fits into this — which I've also mentioned below —  because it is responsible _for_ memoizing the funtions (_caching them_) **so that they only run once**.
 //
 //
 // =======================
@@ -159,8 +163,10 @@ const styles = StyleSheet.create({
 // =======================
 //
 // The useState() hook is a function that takes an **initial state value** and then **returns an array** with two elements:
+//
 //      1. The current state value
 //      2. A function that lets me update that current state's value
+//
 // The function that lets me update the state value, setState(), is a setter function that I call with a new state value and then React will re-render the component with the new state value.
 //
 //
@@ -186,9 +192,26 @@ const styles = StyleSheet.create({
 // =======================
 //
 // The useEffect() hook is a function that lets me perform "**Side Effects**" (_that's going to have to be a review of my notes..._) within function componenents, and the useEffect() hook takes two arguments:
+//
 //      1. A function that contains the side effect code
 //      2. An array of dependencies that the side effect depends on which will trigger the side effect to run whenever any value inside this array changes
+//
 // The useEffect() hook is called after the component is rendered and then again after every update
+//
+//
+// =======================
+// = React.useCallback() =
+// =======================
+//
+// The React.useCallback() hook is a function that _memoizes_ a function so that the function will only run once.
+// React.useCallback() takes two arguments:
+//
+//      1. The function to memoize
+//      2. A dependency array that dictates when the function should be re-created
+//
+// So in my case, when I pass setState() to React.useCallback(), it will only run once since I passed it an empty dependency array.
+//
+//
 // Don't forget to close out your comments, dude...
 —> PKv2
 */
