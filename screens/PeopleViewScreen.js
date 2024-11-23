@@ -41,10 +41,10 @@ export default function PeopleViewScreen(props) {
   const [visible, setVisible] = useState(false);
   const [selectedPersonId, setSelectedPersonId] = useState(null);
   const [selectedPersonName, setSelectedPersonName] = useState("");
+
   const isFocused = useIsFocused();
 
   // jh-uef
-
   const fetchData = async () => {
     try {
       const data = await fetchPeople();
@@ -55,9 +55,44 @@ export default function PeopleViewScreen(props) {
       setError("Unable to fetch data, offline mode");
     }
   };
+
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (isFocused) fetchData();
+  }, [isFocused]);
+
+  // jh-hd
+  const handleDelete = async () => {
+    if (selectedPersonId !== null) {
+      try {
+        const success = await deletePerson(selectedPersonId);
+        if (success) {
+          fetchData();
+          hideDialog();
+        } else {
+          setError("Failed to delete. Please try again.");
+        }
+      } catch (err) {
+        console.error(err);
+        setOffline(true);
+        setError("Failed to delete. Check your connection.");
+        hideDialog();
+      }
+    }
+  };
+
+  // jh-sdlg
+  const showDialog = (id, name) => {
+    setSelectedPersonId(id);
+    setSelectedPersonName(name);
+    setVisible(true);
+  };
+
+  // jh-hdlg
+  const hideDialog = () => {
+    setVisible(false);
+    setSelectedPersonId(null);
+  };
+
   function showAddPerson() {
     props.navigation.navigate("PersonEdit", { id: -1 });
   }
