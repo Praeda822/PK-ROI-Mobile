@@ -25,10 +25,53 @@ import {
   ActivityIndicator,
 } from "react-native";
 // import { TouchableOpacity } from "react-native-gesture-handler";
-import { useIsFocused } from "@react-navigation/native";
+// For resetting the menu state when the screen is focused
+import { useFocusEffect } from "@react-navigation/native";
 import { Dropdown } from "react-native-paper-dropdown";
 
 export default function PeopleViewScreen(props) {
+  // useState() returns an array with two elements:
+  // 1. the current state
+  // 2. a function to update it
+  const [state, setState] = useState({
+    // Start my state with the 3 buttons enabled
+    showAddButton: true,
+    showEditButton: true,
+    showViewButton: true,
+  });
+
+  /*
+  //
+  // useFocusEffect runs the provided function whenever the screen is focused
+  // Infinite loop of updates & errors, man, but i'll leave it here..
+  // —> PKv1
+
+  useFocusEffect(() => {
+    
+    setState({
+      showAddButton: true,
+      showEditButton: true,
+      showViewButton: true,
+    });
+  });
+
+  // Infinite loop wasa because I didn't supply an empty dependency array..
+ */
+
+  useFocusEffect(
+    // Memoizes the function so it only runs once
+    React.useCallback(
+      () => {
+        setState({
+          showAddButton: true,
+          showEditButton: true,
+          showViewButton: true,
+        });
+      },
+      [] // Empty dependency array means this effect will only run once
+    )
+  );
+
   function showAddPerson() {
     props.navigation.navigate("PersonEdit", { id: -1 });
   }
@@ -50,23 +93,29 @@ export default function PeopleViewScreen(props) {
     // I want to be using mode="" for my buttons
     <Surface style={styles.container}>
       <Text variant="displaySmall">PeopleViewScreen</Text>
-      <Button mode="contained" onPress={showAddPerson} style={styles.button}>
-        Add Person
-      </Button>
-      <Button
-        mode="contained"
-        onPress={() => showEditPerson(1)}
-        style={styles.button}
-      >
-        Edit Person
-      </Button>
-      <Button
-        mode="contained"
-        onPress={() => showViewPerson(1)}
-        style={styles.button}
-      >
-        View Person
-      </Button>
+      {state.showAddButton && (
+        <Button mode="contained" onPress={showAddPerson} style={styles.button}>
+          Add Person
+        </Button>
+      )}
+      {state.showEditButton && (
+        <Button
+          mode="contained"
+          onPress={() => showEditPerson(1)}
+          style={styles.button}
+        >
+          Edit Person
+        </Button>
+      )}
+      {state.showViewButton && (
+        <Button
+          mode="contained"
+          onPress={() => showViewPerson(1)}
+          style={styles.button}
+        >
+          View Person
+        </Button>
+      )}
     </Surface>
   );
 }
@@ -82,3 +131,64 @@ const styles = StyleSheet.create({
     marginTop: 9,
   },
 });
+
+/*
+// =====================
+// =====================
+//
+//
+// ===================== 
+// =    REACT NOTES    =
+// =====================
+// React Navigation uses something called a "Stack Navigator" to manage navigation between screens
+// Meaning, The React "engine" keeps track of the screens I've visited and allows me to go back to them (_which is why my "Go Back" just werks_).
+// React also preserves "Application State" which is the "state" of the data that my application is currently using.
+// So, when I go back to the "Home" screen, React Navigation pops the current screen off the _Stack_ and shows the previous screen's state along with all my unmolested data.
+// Which means....to avoid the PeopleViewScreen from NOT having its state reset when I click off of it (since it's technically still in the stack even when I click "Go Home"), I need to use the "useIsFocused" hook.
+// The useIsFocused hook is a hook that returns a **boolean value** that tells me if the screen (_PeopleViewScreen) is currently focused or not.
+//
+//
+// =======================
+// = React.useCallback() =
+// =======================
+//
+//
+//
+// =======================
+// =      useState()     =
+// =======================
+//
+// The useState() hook is a function that takes an **initial state value** and then **returns an array** with two elements:
+//      1. The current state value
+//      2. A function that lets me update that current state's value
+// The function that lets me update the state value, setState(), is a setter function that I call with a new state value and then React will re-render the component with the new state value.
+//
+//
+// =======================
+// =   useFocusEffect()  =
+// =======================
+//
+// The useFocusEffect() hook is a function that takes a function as an argument and then runs that function whenever the screen is focused.
+// I can control _when_ that function runs by using a **DEPENDENCY ARRAY** that I pass as a second argument to the useFocusEffect() hook
+// And, if that dependency array is empty,  the function will run _every time_ the screen is focused
+//
+//
+// =======================
+// =    useIsFocused()   =
+// =======================
+//
+// The useIsFocused() hook is a function that returns a **boolean value** that tells me if the screen (_PeopleViewScreen_) is currently focused or not.
+// Meaning, isFocused will be **true** if the screen is currently focused, and **false** if it's not.
+//
+//
+// =======================
+// =     useEffect()     =
+// =======================
+//
+// The useEffect() hook is a function that lets me perform "**Side Effects**" (_that's going to have to be a review of my notes..._) within function componenents, and the useEffect() hook takes two arguments:
+//      1. A function that contains the side effect code
+//      2. An array of dependencies that the side effect depends on which will trigger the side effect to run whenever any value inside this array changes
+// The useEffect() hook is called after the component is rendered and then again after every update
+// Don't forget to close out your comments, dude...
+—> PKv2
+*/

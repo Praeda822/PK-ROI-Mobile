@@ -13,12 +13,14 @@ import RootNavigator from "./navigation/RootNavigator";
 // Alas... it did not work lol... but i'll leave it here so I can remember my first time learning how to use useEffect and useState
 // You never forget your first time..
 
+// https://github.com/Praeda822/PK-ROI-Mobile/commit/51d9dacf225e6d69f633673e718e777d6761e059
 // import * as Font from "expo-font";
 // import * as SplashScreen from "expo-splash-screen";
 
 // -->|| PK v2
 */
 
+/*
 // Generated from:
 // https://callstack.github.io/react-native-paper/docs/guides/theming/#creating-dynamic-theme-colors
 // Primary: #941A1D
@@ -26,9 +28,10 @@ import RootNavigator from "./navigation/RootNavigator";
 // Tertiary (custom): #CB6D4F
 // Copy the light-theme and PASTE IT IN THE THEME OBJECT
 // REST operator to declare the default theme and copy it into the custom ROI theme
-// Then explcitily define the dcustom ROI theme's colours as the default theme's colours
+// Then explicitly define the custom ROI theme's colours as the default theme's colours
+// -->|| PK v2
+*/
 
-// Define your custom theme
 const theme = {
   ...DefaultTheme,
   colors: {

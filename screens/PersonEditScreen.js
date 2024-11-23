@@ -24,7 +24,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 // import { TouchableOpacity } from "react-native-gesture-handler";
-import { useIsFocused } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { Dropdown } from "react-native-paper-dropdown";
 
 export default function PersonEditScreen(props) {
