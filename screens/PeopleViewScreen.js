@@ -113,7 +113,6 @@ export default function PeopleViewScreen(props) {
     // the key prop is used to uniquely identify each item in the list so that React can efficiently update the list when it changes.
     <Surface style={styles.container}>
       <Text variant="displaySmall">PeopleViewScreen</Text>
-      // Iterate over
       {people.map((person) => (
         <Text key={person.id}>{person.name}</Text>
       ))}
