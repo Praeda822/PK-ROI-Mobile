@@ -15,9 +15,9 @@ export default function PeopleNavigator() {
       initialRouteName="PeopleView"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="PeopleView" component={StackScreen1} />
-      <Stack.Screen name="PersonView" component={StackScreen1} />
-      <Stack.Screen name="PersonEdit" component={StackScreen1} />
+      <Stack.Screen name="PeopleView" component={PeopleViewScreen} />
+      <Stack.Screen name="PersonView" component={PersonViewScreen} />
+      <Stack.Screen name="PersonEdit" component={PersonEditScreen} />
     </Stack.Navigator>
   );
 }

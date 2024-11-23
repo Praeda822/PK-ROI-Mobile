@@ -22,7 +22,7 @@ export default function MainNavigator() {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="home" color={color} size={size} />
+            <MaterialIcons name="home" color={color} size={26} />
           ),
         }}
       />
@@ -32,7 +32,7 @@ export default function MainNavigator() {
         options={{
           tabBarLabel: "People",
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="people" color={color} size={size} />
+            <MaterialIcons name="people" color={color} size={26} />
           ),
         }}
       />
@@ -40,9 +40,9 @@ export default function MainNavigator() {
         name="Help"
         component={HelpScreen}
         options={{
-          tabBarLabel: "TabScreen3",
+          tabBarLabel: "Help",
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="help" color={color} size={size} />
+            <MaterialIcons name="help" color={color} size={26} />
           ),
         }}
       />

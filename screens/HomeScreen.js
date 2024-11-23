@@ -28,11 +28,23 @@ import { useIsFocused } from "@react-navigation/native";
 import { Dropdown } from "react-native-paper-dropdown";
 
 export default function HomeScreen(props) {
+  function showPeopleView() {
+    props.navigation.navigate("PeopleView");
+  }
+
   return (
-    <Surface
-      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-    >
+    <Surface style={styles.container}>
       <Text variant="displaySmall">HomeScreen</Text>
+      <Button title="Go to People View" onPress={showPeopleView} />
     </Surface>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 2,
+  },
+});
