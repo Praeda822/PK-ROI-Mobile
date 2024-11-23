@@ -31,11 +31,39 @@ export default function PersonEditScreen(props) {
   function showPeopleView() {
     props.navigation.navigate("PeopleView");
   }
+
+  function goBack() {
+    props.navigation.goBack();
+  }
+
+  function goHome() {
+    props.navigation.navigate("Home");
+  }
+
   return (
-    <Surface
-      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-    >
+    <Surface style={styles.container}>
       <Text variant="displaySmall">PersonEditScreen</Text>
+      <Button mode="contained" onPress={showPeopleView} style={styles.button}>
+        Go to People View
+      </Button>
+      <Button mode="contained" onPress={goBack} style={styles.button}>
+        Go Back
+      </Button>
+      <Button mode="contained" onPress={goHome} style={styles.button}>
+        Go Home
+      </Button>
     </Surface>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 6,
+  },
+  button: {
+    marginTop: 9,
+  },
+});

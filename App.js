@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
@@ -55,7 +55,7 @@ const theme = {
     backdrop: "rgba(59, 45, 44, 0.4)",
   },
   // Global font settings so I DON"T have to use the "fontFamily" prop on every single text component..
-  fonts: {
+  text: {
     regular: {
       fontFamily: "TrebuchetMS-Regular",
       fontWeight: "normal",
@@ -76,16 +76,6 @@ const theme = {
 };
 
 export default function App() {
-  // Ensures that the "custom" font is loaded before rendering the app
-  // Ripped straight from C:\Windows\Fonts\
-  // All of this just to globally load a font????
-  const [fontsLoaded] = Font.useFonts({
-    "TrebuchetMS-Regular": require("./assets/fonts/trebuc.ttf"),
-    "TrebuchetMS-Bold": require("./assets/fonts/trebucbd.ttf"),
-    "TrebuchetMS-Italic": require("./assets/fonts/trebucit.ttf"),
-    "TrebuchetMS-BoldItalic": require("./assets/fonts/trebucbi.ttf"),
-  });
-
   return (
     <SafeAreaProvider>
       <PaperProvider theme={theme}>

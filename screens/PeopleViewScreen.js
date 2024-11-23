@@ -50,12 +50,23 @@ export default function PeopleViewScreen(props) {
     // I want to be using mode="" for my buttons
     <Surface style={styles.container}>
       <Text variant="displaySmall">PeopleViewScreen</Text>
-      <Button mode="Contained" title="Add Person" onPress={showAddPerson} />
-      Add Person
-      <Button title="Edit Person" onPress={() => showEditPerson(1)} />
-      Edit Person
-      <Button title="View Person" onPress={() => showViewPerson(1)} />
-      View Person
+      <Button mode="contained" onPress={showAddPerson} style={styles.button}>
+        Add Person
+      </Button>
+      <Button
+        mode="contained"
+        onPress={() => showEditPerson(1)}
+        style={styles.button}
+      >
+        Edit Person
+      </Button>
+      <Button
+        mode="contained"
+        onPress={() => showViewPerson(1)}
+        style={styles.button}
+      >
+        View Person
+      </Button>
     </Surface>
   );
 }

@@ -34,8 +34,10 @@ export default function HomeScreen(props) {
 
   return (
     <Surface style={styles.container}>
-      <Text variant="displaySmall">HomeScreen</Text>
-      <Button title="Go to People View" onPress={showPeopleView} />
+      <Text variant="displaySmall" style={styles.title}>
+        HomeScreen
+      </Text>
+      <Button mode="Go to People View" onPress={showPeopleView} />
     </Surface>
   );
 }
