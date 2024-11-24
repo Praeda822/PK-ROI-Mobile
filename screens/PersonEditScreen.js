@@ -56,6 +56,8 @@ export default function PersonEditScreen(props) {
   const [error, setError] = useState(null);
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
+  // Handles state of the title for the PersonEditScreen
+  const [title, setTitle] = useState(null);
 
   // Read id of record from the route...
   // pull mode from route params
@@ -78,7 +80,10 @@ export default function PersonEditScreen(props) {
           const personData = await fetchPersonById(id);
           setPerson(personData);
           setSelectedDepartment(personData.departmentId);
+          setTitle(personData.name);
           console.log("Person data:", personData);
+        } else {
+          setTitle("New Record");
         }
       } catch (err) {
         console.error(err);
@@ -124,7 +129,7 @@ export default function PersonEditScreen(props) {
 
   return (
     <Surface style={styles.container}>
-      <Text variant="displaySmall">PersonEditScreen</Text>
+      <Text variant="displaySmall">{title}</Text>
       <TextInput
         label="Name"
         value={person.name}
