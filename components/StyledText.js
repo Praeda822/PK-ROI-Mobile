@@ -1,17 +1,16 @@
 import * as React from "react";
 import { Text, View, StyleSheet } from "react-native";
+import { useTheme } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import Settings from "../constants/Settings";
 
-const loadFonts = async () => {
+export const loadFonts = async () => {
   await Font.loadAsync({
     "TrebuchetMS-Regular": require("../assets/fonts/trebuc.ttf"),
     "TrebuchetMS-Bold": require("../assets/fonts/trebucbd.ttf"),
   });
 };
-
-export default loadFonts;
 
 // Change my fontSize and lineHeight based on the global fontSizeModifier
 function changeFontSize(styles) {
@@ -39,26 +38,4 @@ function changeFontSize(styles) {
 
   // Return modified style
   return [styleObject, newFontSize, newLineHeight];
-}
-
-export function MonoText(props) {
-  return (
-    <Text {...props} style={[props.style, { fontFamily: "space-mono" }]} />
-  );
-}
-// Function to adjust the font size and line height of the bodyText before applying it to the Text component
-export function TextParagraph(props) {
-  return (
-    <Text {...props} style={[changeFontSize(Styles.bodyText), props.style]} />
-  );
-}
-
-// Function to adjust the font size and line height of the listItem before applying it to the Text component
-export function TextListItem(props) {
-  return (
-    <TextParagraph
-      {...props}
-      style={[changeFontSize(Styles.listItem), props.style]}
-    />
-  );
 }

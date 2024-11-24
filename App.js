@@ -8,6 +8,8 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 // DON'T FORGET TO IMPORT DefaultTheme FROM react-native-paper!!!!!!!! -->|| PK v1
 import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
 import RootNavigator from "./navigation/RootNavigator";
+// For TrebuchetMS font
+import { loadFonts } from "./components/StyledText";
 /*
 // Originally my attempt to import the "custom" TrebuchetMS.ttc font
 // Alas... it did not work lol... but i'll leave it here so I can remember my first time learning how to use useEffect and useState
@@ -100,6 +102,17 @@ const theme = {
 };
 
 export default function App() {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
+    const loadAsyncFonts = async () => {
+      await loadFonts();
+      setFontsLoaded(true);
+    };
+
+    loadAsyncFonts();
+  }, []);
+
   return (
     <SafeAreaProvider>
       <PaperProvider theme={theme}>
@@ -112,4 +125,19 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  regularText: {
+    fontFamily: "TrebuchetMS-Regular",
+    fontSize: 18,
+  },
+  boldText: {
+    fontFamily: "TrebuchetMS-Bold",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+});

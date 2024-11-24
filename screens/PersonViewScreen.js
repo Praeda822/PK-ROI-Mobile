@@ -26,8 +26,20 @@ import {
 // import { TouchableOpacity } from "react-native-gesture-handler";
 import { useFocusEffect } from "@react-navigation/native";
 import { Dropdown } from "react-native-paper-dropdown";
+import { fetchPersonById } from "../utils/api";
 
 export default function PersonViewScreen(props) {
+  // jh-us
+  // useState() returns an array with two elements:
+  // 1. the current state
+  // 2. a function to update it
+
+  const [person, setPerson] = useState(null);
+  const [offline, setOffline] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Read ID of record from the route...
+  const { id } = props.route.params;
 
   function showPeopleView() {
     props.navigation.navigate("PeopleView");
