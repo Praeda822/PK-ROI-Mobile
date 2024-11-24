@@ -114,36 +114,30 @@ export default function PeopleViewScreen(props) {
       <ScrollView style={{ flex: 1 }}>
         {people.map((person) => (
           <Card key={person.id} style={styles.card}>
-            <View style={styles.cardContent}>
+            <View style={styles.cardAvatar}>
               <TouchableOpacity onPress={() => showViewPerson(person.id)}>
                 <Avatar.Icon size={48} icon="account" />
               </TouchableOpacity>
-              <Button
-                mode="contained"
-                onPress={showAddPerson}
-                style={styles.button}
-              >
-                Add Person
-              </Button>
-              <Button
-                mode="contained"
-                onPress={() => showEditPerson(1)}
-                style={styles.button}
-              >
-                Edit Person
-              </Button>
-              <Button
-                mode="contained"
-                onPress={() => showViewPerson(1)}
-                style={styles.button}
-              >
-                View Person
-              </Button>
+              <View style={styles.cardMainContent}>
+                <Text>{person.name}</Text>
+                <Text>{person.Department.name}</Text>
+                <Text>{person.phone}</Text>
+              </View>
+              <View style={styles.cardButtons}>
+                <IconButton
+                  icon="pencil"
+                  onPress={() => showEditPerson(person.id)}
+                />
+                <IconButton
+                  icon="delete"
+                  onPress={() => showDialog(person.id, person.name)}
+                />
+              </View>
             </View>
           </Card>
         ))}
       </ScrollView>
-      <FAB />
+      <FAB style={styles.fab} icon="plus" onPress={showAddPerson} />
       <Portal></Portal>
     </Surface>
   );
@@ -159,8 +153,22 @@ const styles = StyleSheet.create({
   card: {
     marginBottom: 10,
   },
-  button: {
-    marginTop: 9,
+  cardAvatar: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+  },
+  cardMainContent: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  cardButtons: {
+    flexDirection: "column",
+  },
+  fab: {
+    position: "absolute",
+    right: 16,
+    bottom: 16,
   },
 });
 
