@@ -11,6 +11,7 @@ import {
   Button,
   Text,
   Surface,
+  Pressable,
   Divider,
   Searchbar,
   useTheme,
@@ -26,18 +27,46 @@ import {
 // import { TouchableOpacity } from "react-native-gesture-handler";
 import { useIsFocused } from "@react-navigation/native";
 import { Dropdown } from "react-native-paper-dropdown";
+import { TextParagraph } from "../components/StyledText";
 
 export default function HomeScreen(props) {
+  const [isLogoColour, setIsLogoColour] = React.useState(true);
+
   function showPeopleView() {
     props.navigation.navigate("PeopleView");
+  }
+
+  function toggleLogo() {
+    setIsLogoColour(!isLogoColour);
+  }
+
+  function showHelpScreen() {
+    props.navigation.navigate("Help");
   }
 
   return (
     <Surface style={styles.container}>
       <Text variant="displaySmall" style={styles.title}>
-        HomeScreen
+        Hi, John
       </Text>
-      <Button mode="Go to People View" onPress={showPeopleView} />
+      <Image
+        source={
+          isLogoColour
+            ? require("../assets/images/roi-logo.jpg")
+            : require("../assets/images/roi-logo-monochrome.jpg")
+        }
+        style={styles.homelogo}
+      />
+      <Text variant="displaySmall" style={styles.title}>
+        ROI HR System
+      </Text>
+
+      <Button mode="contained" onPress={showPeopleView} style={styles.button}>
+        View People
+      </Button>
+      <Button mode="contained" onPress={showHelpScreen} style={styles.button}>
+        Help
+      </Button>
     </Surface>
   );
 }
@@ -48,5 +77,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 2,
+
+    title: {},
+
+    homeLogo: {
+      width: 200,
+      height: 200,
+      margin: 10,
+    },
   },
 });
