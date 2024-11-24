@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
 // =     useEffect()     =
 // =======================
 //
-// The useEffect() hook is a function that lets me perform "**Side Effects**" (_that's going to have to be a review of my notes..._) within function componenents, and the useEffect() hook takes two arguments:
+// The useEffect() hook is a function that lets me perform "**Side Effects**" (_that's going to have to be a review of my notes..._) within function components, and the useEffect() hook takes two arguments:
 //
 //      1. A function that contains the side effect code
 //      2. An array of dependencies that the side effect depends on which will trigger the side effect to run whenever any value inside this array changes
