@@ -105,34 +105,46 @@ export default function PeopleViewScreen(props) {
     props.navigation.navigate("PersonView", { id: id });
   }
 
-  function showPeopleView() {
-    props.navigation.navigate("PeopleView");
-  }
   return (
-    // the map function is to iterate over the people array and for every person, it will render a Text component with the person's name
+    // the map function is to iterate over the people array and for every person, it will render a CARD component with the person's name
     // the key prop is used to uniquely identify each item in the list so that React can efficiently update the list when it changes.
+    // As per instructions, I'll want three views: Avatar, main content, and buttons.
     <Surface style={styles.container}>
-      <Text variant="displaySmall">PeopleViewScreen</Text>
-      {people.map((person) => (
-        <Text key={person.id}>{person.name}</Text>
-      ))}
-      <Button mode="contained" onPress={showAddPerson} style={styles.button}>
-        Add Person
-      </Button>
-      <Button
-        mode="contained"
-        onPress={() => showEditPerson(1)}
-        style={styles.button}
-      >
-        Edit Person
-      </Button>
-      <Button
-        mode="contained"
-        onPress={() => showViewPerson(1)}
-        style={styles.button}
-      >
-        View Person
-      </Button>
+      <Text variant="headlineLarge">Staff Directory</Text>
+      <ScrollView style={{ flex: 1 }}>
+        {people.map((person) => (
+          <Card key={person.id} style={styles.card}>
+            <View style={styles.cardContent}>
+              <TouchableOpacity onPress={() => showViewPerson(person.id)}>
+                <Avatar.Icon size={48} icon="account" />
+              </TouchableOpacity>
+              <Button
+                mode="contained"
+                onPress={showAddPerson}
+                style={styles.button}
+              >
+                Add Person
+              </Button>
+              <Button
+                mode="contained"
+                onPress={() => showEditPerson(1)}
+                style={styles.button}
+              >
+                Edit Person
+              </Button>
+              <Button
+                mode="contained"
+                onPress={() => showViewPerson(1)}
+                style={styles.button}
+              >
+                View Person
+              </Button>
+            </View>
+          </Card>
+        ))}
+      </ScrollView>
+      <FAB />
+      <Portal></Portal>
     </Surface>
   );
 }
@@ -142,7 +154,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 6,
+    padding: 16,
+  },
+  card: {
+    marginBottom: 10,
   },
   button: {
     marginTop: 9,

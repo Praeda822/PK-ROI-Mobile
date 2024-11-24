@@ -123,12 +123,18 @@ export default function PersonEditScreen(props) {
   return (
     <Surface style={styles.container}>
       <Text variant="displaySmall">PersonEditScreen</Text>
-      <Button mode="contained" onPress={goBack} style={styles.button}>
-        Go Back
-      </Button>
-      <Button mode="contained" onPress={goHome} style={styles.button}>
-        Go Home
-      </Button>
+      <View style={styles.buttonContainer}>
+        <Button
+          mode="outlined"
+          onPress={() => props.navigation.goBack()}
+          style={styles.button}
+        >
+          Cancel
+        </Button>
+        <Button mode="contained" onPress={handleSubmit} style={styles.button}>
+          Submit
+        </Button>
+      </View>
     </Surface>
   );
 }
@@ -140,7 +146,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
   },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   button: {
     marginTop: 9,
+    marginHorizontal: 8,
   },
 });
