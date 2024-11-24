@@ -45,6 +45,7 @@ const theme = {
     secondary: "rgb(156, 65, 60)",
     onSecondary: "rgb(255, 255, 255)",
     secondaryContainer: "rgb(255, 176, 169)",
+    // Tabbed Icon Colour
     onSecondaryContainer: "rgb(65, 0, 3)",
     tertiary: "rgb(134, 83, 0)",
     onTertiary: "rgb(255, 255, 255)",
@@ -58,8 +59,11 @@ const theme = {
     onBackground: "rgb(32, 26, 25)",
     surface: "rgb(255, 251, 255)",
     onSurface: "rgb(32, 26, 25)",
-    surfaceVariant: "rgb(118, 0, 12)",
+    // Changes the background colour of my text inputs
+    surfaceVariant: "rgb(255,255,255)",
     onSurfaceVariant: "rgb(83, 67, 66)",
+    text: "rgb(0, 0, 0)",
+    placeholder: "rgb(128, 128, 128)",
     outline: "rgb(133, 115, 113)",
     outlineVariant: "rgb(216, 194, 191)",
     shadow: "rgb(0, 0, 0)",

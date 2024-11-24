@@ -93,12 +93,15 @@ export default function PeopleViewScreen(props) {
     setSelectedPersonId(null);
   };
 
+  // -1 to indicate that I'm adding a new person
+  // Changed it to mode parameter and it just worked..
   function showAddPerson() {
-    props.navigation.navigate("PersonEdit", { id: -1 });
+    props.navigation.navigate("PersonEdit", { mode: "add" });
   }
 
+  // Updated with mode parameter
   function showEditPerson(id) {
-    props.navigation.navigate("PersonEdit", { id: id });
+    props.navigation.navigate("PersonEdit", { mode: "edit", id: id });
   }
 
   function showViewPerson(id) {

@@ -27,7 +27,13 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import { Dropdown } from "react-native-paper-dropdown";
 // Forgot my imports again...
-import { fetchDepartments, fetchPersonById } from "../utils/api";
+import {
+  fetchDepartments,
+  fetchPersonById,
+  addPerson,
+  updatePerson,
+} from "../utils/api";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function PersonEditScreen(props) {
   // jh-us
@@ -35,14 +41,25 @@ export default function PersonEditScreen(props) {
   // 1. the current state
   // 2. a function to update it
 
-  const [person, setPerson] = useState(null);
+  // Set default state of person object
+  const [person, setPerson] = useState({
+    name: "",
+    phone: "",
+    street: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "",
+    departmentId: null,
+  });
   const [offline, setOffline] = useState(false);
   const [error, setError] = useState(null);
   const [departments, setDepartments] = useState([]);
-  const [selectedDepartment, setselectedDepartment] = useState(null);
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
 
   // Read id of record from the route...
-  const { id } = props.route.params;
+  // pull mode from route params
+  const { id, mode } = props.route.params;
 
   // jh-uef
   // useEffect() takes two arguments:
@@ -51,10 +68,18 @@ export default function PersonEditScreen(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await [fetchDepartments(), fetchPersonById(id)];
-        setPerson(data);
+        console.log("Fetching departments data..");
+        const departmentsData = await fetchDepartments();
         setDepartments(departmentsData);
-        setSelectedDepartment(personData.departmentId);
+        console.log("Departments data:", departmentsData);
+
+        if (mode === "edit") {
+          console.log("Fetching person data for person with id:", id);
+          const personData = await fetchPersonById(id);
+          setPerson(personData);
+          setSelectedDepartment(personData.departmentId);
+          console.log("Person data:", personData);
+        }
       } catch (err) {
         console.error(err);
         setOffline(true);
@@ -63,7 +88,7 @@ export default function PersonEditScreen(props) {
     };
 
     fetchData();
-  }, [id]);
+  }, [mode, id]);
 
   // Check if the departments data is ready yet
   if (!departments || !departments.length) {
@@ -72,6 +97,21 @@ export default function PersonEditScreen(props) {
         <Text>Loading data...</Text>
       </Surface>
     );
+  }
+
+  // jh-hs
+  async function handleSubmit() {
+    try {
+      if ("mode" === "add") {
+        await addPerson(person);
+      } else {
+        await updatePerson(id, person);
+      }
+      props.navigation.goBack();
+    } catch (err) {
+      console.error(err);
+      setError("Failed to save data.");
+    }
   }
 
   function goBack() {
@@ -85,12 +125,56 @@ export default function PersonEditScreen(props) {
   return (
     <Surface style={styles.container}>
       <Text variant="displaySmall">PersonEditScreen</Text>
-      <Button mode="contained" onPress={goBack} style={styles.button}>
-        Go Back
-      </Button>
-      <Button mode="contained" onPress={goHome} style={styles.button}>
-        Go Home
-      </Button>
+      <TextInput
+        label="Name"
+        value={person.name}
+        onChangeText={(text) => setPerson({ ...person, name: text })}
+      />
+      <TextInput
+        label="Phone"
+        value={person.phone}
+        onChangeText={(text) => setPerson({ ...person, phone: text })}
+      />
+      <TextInput
+        label="Street"
+        value={person.street}
+        onChangeText={(text) => setPerson({ ...person, street: text })}
+      />
+      <TextInput
+        label="City"
+        value={person.city}
+        onChangeText={(text) => setPerson({ ...person, city: text })}
+      />
+      <TextInput
+        label="State"
+        value={person.state}
+        onChangeText={(text) => setPerson({ ...person, state: text })}
+      />
+      <TextInput
+        label="Zip"
+        value={person.zip}
+        onChangeText={(text) => setPerson({ ...person, zip: text })}
+      />
+      <TextInput
+        label="Country"
+        value={person.country}
+        onChangeText={(text) => setPerson({ ...person, country: text })}
+      />
+      <View style={styles.buttonContainer}>
+        <Button
+          mode="contained"
+          onPress={goBack}
+          style={styles.button}
+          icon={() => (
+            <MaterialIcons name="arrow-back" size={26} color="white" />
+          )}
+        >
+          Cancel
+        </Button>
+        <Button mode="contained" onPress={handleSubmit} style={styles.button}>
+          Ok
+        </Button>
+      </View>
     </Surface>
   );
 }
@@ -102,7 +186,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 6,
   },
+
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    width: "100%",
+    paddingHorizontal: 16,
+  },
+
   button: {
     marginTop: 9,
+    marginHorizontal: 8,
   },
 });

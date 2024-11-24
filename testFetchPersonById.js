@@ -17,3 +17,5 @@ const fetchPersonById = async (id) => {
 // Test the API with a specific person ID
 const personId = 2;
 fetchPersonById(personId);
+
+// node testFetchPersonById.js
