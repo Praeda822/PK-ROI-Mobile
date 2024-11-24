@@ -138,7 +138,21 @@ export default function PeopleViewScreen(props) {
         ))}
       </ScrollView>
       <FAB style={styles.fab} icon="plus" onPress={showAddPerson} />
-      <Portal></Portal>
+      <Portal>
+        <Dialog visible={visible} onDismiss={hideDialog}>
+          <Dialog.Title>Confirm Deletion</Dialog.Title>
+          <Dialog.Content>
+            <Text style={{ marginBottom: 10 }}>
+              Are you sure you want to delete?
+            </Text>
+            <Text style={{ fontWeight: "bold" }}>{selectedPersonName}</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={hideDialog}>Cancel</Button>
+            <Button onPress={handleDelete}>Delete</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </Surface>
   );
 }
