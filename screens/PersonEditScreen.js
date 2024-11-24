@@ -41,6 +41,9 @@ export default function PersonEditScreen(props) {
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setselectedDepartment] = useState(null);
 
+  // Read id of record from the route...
+  const { id } = props.route.params;
+
   // jh-uef
   // useEffect() takes two arguments:
   // 1. A function that contains the side effect code
@@ -49,9 +52,9 @@ export default function PersonEditScreen(props) {
     const fetchData = async () => {
       try {
         const data = await [fetchDepartments(), fetchPersonById(id)];
-
         setPerson(data);
         setDepartments(departmentsData);
+        setSelectedDepartment(personData.departmentId);
       } catch (err) {
         console.error(err);
         setOffline(true);
@@ -60,7 +63,16 @@ export default function PersonEditScreen(props) {
     };
 
     fetchData();
-  }, [fetchDepartments, id]);
+  }, [id]);
+
+  // Check if the departments data is ready yet
+  if (!departments || !departments.length) {
+    return (
+      <Surface style={styles.container}>
+        <Text>Loading data...</Text>
+      </Surface>
+    );
+  }
 
   function goBack() {
     props.navigation.goBack();
