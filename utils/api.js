@@ -1,4 +1,4 @@
-const API_BASE_URL = "Http://localhost:3000/api";
+const API_BASE_URL = "http://localhost:3000/api";
 
 // Helper function to fetch JSON data
 /**
@@ -28,6 +28,7 @@ const getJSON = async function (url, errorMsg = "Something went wrong..") {
 //   }
 // }
 
+// Fetch departments
 export async function fetchDepartments() {
   return getJSON(`${API_BASE_URL}/departments`, "Failed to fetch departments");
 }
@@ -42,6 +43,7 @@ export async function fetchDepartments() {
 //   }
 // }
 
+// Fetch people
 export async function fetchPeople() {
   return getJSON(`${API_BASE_URL}/people`, "Failed to fetch people");
 }
@@ -58,11 +60,12 @@ export async function fetchPeople() {
 
 export async function fetchPersonById(id) {
   return getJSON(
-    `${API_BASE_URL}/person/${id}`,
+    `${API_BASE_URL}/people/${id}`,
     "Failed to fetch person by ID"
   );
 }
 
+// Add Person
 // jh-fa (JH Fetch-Update)
 export async function addPerson(personData) {
   try {
@@ -80,6 +83,7 @@ export async function addPerson(personData) {
   }
 }
 
+// Update Person
 export async function updatePerson(id, updatedData) {
   try {
     const response = await fetch(`${API_BASE_URL}/person/${id}`, {
@@ -96,6 +100,7 @@ export async function updatePerson(id, updatedData) {
   }
 }
 
+// Delete Person
 //jh-fu (JH-Fetch-Update)
 export async function deletePerson(id) {
   try {

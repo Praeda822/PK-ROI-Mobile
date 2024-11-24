@@ -38,12 +38,37 @@ export default function PersonViewScreen(props) {
   const [offline, setOffline] = useState(false);
   const [error, setError] = useState(null);
 
-  // Read ID of record from the route...
+  // Read id of record from the route...
   const { id } = props.route.params;
 
-  function showPeopleView() {
-    props.navigation.navigate("PeopleView");
+  // jh-uef
+  // useEffect() takes two arguments:
+  // 1. A function that contains the side effect code
+  // 2. An array of dependencies that the side effect depends on
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchPersonById(id);
+        setPerson(data);
+      } catch (err) {
+        console.error(err);
+        setOffline(true);
+        setError("Unable to fetch data, offline mode");
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  // Error handling to display a message if the data cannot be fetched
+  if (!person) {
+    return (
+      <Surface style={styles.container}>
+        <Text>Loading person data...</Text>
+      </Surface>
+    );
   }
+
   // Returns user to previous screen
   function goBack() {
     props.navigation.goBack();
@@ -54,11 +79,16 @@ export default function PersonViewScreen(props) {
   }
 
   return (
+    // IT WORKS!!!!!
     <Surface style={styles.container}>
       <Text variant="displaySmall">PersonViewScreen</Text>
-      <Button mode="contained" onPress={showPeopleView} style={styles.button}>
-        Go to People View
-      </Button>
+      <Text variant="titleLarge">{person.name}</Text>
+      <Text variant="bodyMedium">{person.phone}</Text>
+      <Text variant="bodyMedium">{person.street}</Text>
+      <Text variant="bodyMedium">
+        {person.city}, {person.state} {person.zip}
+      </Text>
+      <Text variant="bodyMedium">{person.country}</Text>
       <Button mode="contained" onPress={goBack} style={styles.button}>
         Go Back
       </Button>
