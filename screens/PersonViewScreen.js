@@ -73,6 +73,11 @@ export default function PersonViewScreen(props) {
   function goBack() {
     props.navigation.goBack();
   }
+
+  function goHome() {
+    props.navigation.navigate("Home");
+  }
+
   return (
     // IT WORKS!!!!!
     <Surface style={styles.container}>
@@ -86,6 +91,9 @@ export default function PersonViewScreen(props) {
       <Text variant="bodyMedium">{person.country}</Text>
       <Button mode="contained" onPress={goBack} style={styles.button}>
         Go Back
+      </Button>
+      <Button mode="contained" onPress={goHome} style={styles.button}>
+        Go Home
       </Button>
     </Surface>
   );
