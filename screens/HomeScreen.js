@@ -38,6 +38,7 @@ import {
 export default function HomeScreen(props) {
   const [isLogoColour, setIsLogoColour] = React.useState(true);
   const theme = useTheme();
+
   function showPeopleView() {
     props.navigation.navigate("PeopleView");
   }

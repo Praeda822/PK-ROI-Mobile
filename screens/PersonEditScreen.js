@@ -26,11 +26,41 @@ import {
 // import { TouchableOpacity } from "react-native-gesture-handler";
 import { useFocusEffect } from "@react-navigation/native";
 import { Dropdown } from "react-native-paper-dropdown";
+// Forgot my imports again...
+import { fetchDepartments, fetchPersonById } from "../utils/api";
 
 export default function PersonEditScreen(props) {
-  function showPeopleView() {
-    props.navigation.navigate("PeopleView");
-  }
+  // jh-us
+  // useState() returns an array with two elements:
+  // 1. the current state
+  // 2. a function to update it
+
+  const [person, setPerson] = useState(null);
+  const [offline, setOffline] = useState(false);
+  const [error, setError] = useState(null);
+  const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setselectedDepartment] = useState(null);
+
+  // jh-uef
+  // useEffect() takes two arguments:
+  // 1. A function that contains the side effect code
+  // 2. An array of dependencies that the side effect depends on
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await [fetchDepartments(), fetchPersonById(id)];
+
+        setPerson(data);
+        setDepartments(departmentsData);
+      } catch (err) {
+        console.error(err);
+        setOffline(true);
+        setError("Unable to fetch data, offline mode");
+      }
+    };
+
+    fetchData();
+  }, [fetchDepartments, id]);
 
   function goBack() {
     props.navigation.goBack();
@@ -43,9 +73,6 @@ export default function PersonEditScreen(props) {
   return (
     <Surface style={styles.container}>
       <Text variant="displaySmall">PersonEditScreen</Text>
-      <Button mode="contained" onPress={showPeopleView} style={styles.button}>
-        Go to People View
-      </Button>
       <Button mode="contained" onPress={goBack} style={styles.button}>
         Go Back
       </Button>
