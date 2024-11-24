@@ -58,7 +58,8 @@ const theme = {
     onBackground: "rgb(32, 26, 25)",
     surface: "rgb(255, 251, 255)",
     onSurface: "rgb(32, 26, 25)",
-    surfaceVariant: "rgb(118, 0, 12)",
+    // Change background colour of text inputs
+    surfaceVariant: "rgb(255,255,255)",
     onSurfaceVariant: "rgb(83, 67, 66)",
     outline: "rgb(133, 115, 113)",
     outlineVariant: "rgb(216, 194, 191)",

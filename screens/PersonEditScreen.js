@@ -25,7 +25,8 @@ import {
 } from "react-native";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 import { useFocusEffect } from "@react-navigation/native";
-import { Dropdown } from "react-native-paper-dropdown";
+import { DropDown } from "react-native-paper-dropdown";
+
 // Forgot my imports again...
 import {
   fetchDepartments,
@@ -33,9 +34,11 @@ import {
   addPerson,
   updatePerson,
 } from "../utils/api";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function PersonEditScreen(props) {
   const theme = useTheme();
+  console.log("DropDown:", DropDown);
   // jh-us
   // useState() returns an array with two elements:
   // 1. the current state
@@ -56,6 +59,16 @@ export default function PersonEditScreen(props) {
   const [error, setError] = useState(null);
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
+  const [showDropDown, setShowDropDown] = useState(false);
+  const [value, setValue] = useState(null);
+  //Define the dropdownlist..
+  const dropDownList = [
+    { label: "General", value: 1 },
+    { label: "Information Communications Technology", value: 2 },
+    { label: "Finance", value: 3 },
+    { label: "Marketing", value: 4 },
+    { label: "Human Resources", value: 5 },
+  ];
 
   const { id } = props.route.params;
 
@@ -89,27 +102,23 @@ export default function PersonEditScreen(props) {
   }, [id]);
 
   //jh-hs
-  const handleSubmit = async () => {
+  async function handleSubmit() {
     try {
+      const updatedPerson = { ...person, departmentId: selectedDepartment };
       if (id === -1) {
-        await addPerson({ ...person, departmentId: selectedDepartment });
+        await addPerson(updatedPerson);
       } else {
-        await updatePerson(id, { ...person, departmentId: selectedDepartment });
+        await updatePerson(id, updatedPerson);
       }
       props.navigation.goBack();
     } catch (err) {
-      console.error("Failed to save data:", err);
-      setError("Failed to save data");
+      console.error(err);
+      setError("Failed to save data.");
     }
-  };
+  }
 
-  // Render a loading message until data is ready
-  if (!departments || !departments.length) {
-    return (
-      <Surface style={styles.container}>
-        <Text>Loading data...</Text>
-      </Surface>
-    );
+  if (!departments || departments.length === 0) {
+    return <Text>No departments available.</Text>; // Or handle accordingly
   }
 
   function goBack() {
@@ -122,12 +131,69 @@ export default function PersonEditScreen(props) {
 
   return (
     <Surface style={styles.container}>
-      <Text variant="displaySmall">PersonEditScreen</Text>
+      <Text variant="headlineLarge">
+        {id === -1 ? "New Person" : person.name}
+      </Text>
+      <TextInput
+        label="Name"
+        value={person.name}
+        onChangeText={(text) => setPerson({ ...person, name: text })}
+        style={styles.input}
+      />
+      <TextInput
+        label="Phone"
+        value={person.phone}
+        onChangeText={(text) => setPerson({ ...person, phone: text })}
+        style={styles.input}
+      />
+      <TextInput
+        label="Street"
+        value={person.street}
+        onChangeText={(text) => setPerson({ ...person, street: text })}
+        style={styles.input}
+      />
+      <TextInput
+        label="City"
+        value={person.city}
+        onChangeText={(text) => setPerson({ ...person, city: text })}
+        style={styles.input}
+      />
+      <TextInput
+        label="State"
+        value={person.state}
+        onChangeText={(text) => setPerson({ ...person, state: text })}
+        style={styles.input}
+      />
+      <TextInput
+        label="Zip"
+        value={person.zip}
+        onChangeText={(text) => setPerson({ ...person, zip: text })}
+        style={styles.input}
+      />
+      <TextInput
+        label="Country"
+        value={person.country}
+        onChangeText={(text) => setPerson({ ...person, country: text })}
+        style={styles.input}
+      />
+      <DropDown
+        label="Department"
+        mode="outlined"
+        value={selectedDepartment}
+        setValue={setSelectedDepartment}
+        list={dropDownList}
+        visible={showDropDown}
+        showDropDown={() => setShowDropDown(true)}
+        onDismiss={() => setShowDropDown(false)}
+      />
       <View style={styles.buttonContainer}>
         <Button
           mode="outlined"
           onPress={() => props.navigation.goBack()}
           style={styles.button}
+          icon={() => (
+            <MaterialIcons name="arrow-back" size={26} color="white" />
+          )}
         >
           Cancel
         </Button>
@@ -145,6 +211,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 16,
+  },
+  input: {
+    marginBottom: 10,
   },
   buttonContainer: {
     flexDirection: "row",

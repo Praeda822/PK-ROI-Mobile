@@ -29,6 +29,7 @@ import { Dropdown } from "react-native-paper-dropdown";
 import { fetchPersonById } from "../utils/api";
 
 export default function PersonViewScreen(props) {
+  const theme = useTheme();
   // jh-us
   // useState() returns an array with two elements:
   // 1. the current state
@@ -81,19 +82,18 @@ export default function PersonViewScreen(props) {
   return (
     // IT WORKS!!!!!
     <Surface style={styles.container}>
-      <Text variant="displaySmall">PersonViewScreen</Text>
-      <Text variant="titleLarge">{person.name}</Text>
-      <Text variant="bodyMedium">{person.phone}</Text>
-      <Text variant="bodyMedium">{person.street}</Text>
-      <Text variant="bodyMedium">
-        {person.city}, {person.state} {person.zip}
-      </Text>
-      <Text variant="bodyMedium">{person.country}</Text>
+      <Text variant="headlineLarge">{person.name}</Text>
+      <View style={styles.form}>
+        <Text variant="bodyMedium">Phone: {person.phone}</Text>
+        <Text variant="bodyMedium">Street: {person.street}</Text>
+        <Text variant="bodyMedium">City: {person.city}</Text>
+        <Text variant="bodyMedium">State: {person.state}</Text>
+        <Text variant="bodyMedium">Zip: {person.zip}</Text>
+        <Text variant="bodyMedium">Country: {person.country}</Text>
+        <Text variant="bodyMedium">Department: {person.Department.name}</Text>
+      </View>
       <Button mode="contained" onPress={goBack} style={styles.button}>
         Go Back
-      </Button>
-      <Button mode="contained" onPress={goHome} style={styles.button}>
-        Go Home
       </Button>
     </Surface>
   );
@@ -104,9 +104,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 6,
+    padding: 16,
+  },
+  form: {
+    marginVertical: 20,
   },
   button: {
-    marginTop: 9,
+    marginTop: 20,
   },
 });
